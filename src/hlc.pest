@@ -1,0 +1,28 @@
+//
+// Created by intellij-pest on 2024-02-28
+// hlc
+// Author: pand5a
+//
+
+// 1657662798.107432301,2147483647
+// 1657662798.107432301.2147483647
+// 1657662798107432301,2147483647
+// 1657662798107432301.2147483647
+// 1657662798.107432301
+// 1657662798107432301
+// 1708329839396 // unix timestamp
+
+input = {
+    hlc_wall_time ~ (","|".")? ~ hlc_logical? |
+    unix_timestamp
+}
+
+hlc_wall_time = {
+    ASCII_DIGIT{10} ~ "." ~ ASCII_DIGIT{9} |
+    ASCII_DIGIT{19}
+}
+hlc_logical = { ASCII_DIGIT{1, 10} }
+
+unix_timestamp = { ASCII_DIGIT{13} }
+
+hlc = { SOI ~ input ~EOI}
